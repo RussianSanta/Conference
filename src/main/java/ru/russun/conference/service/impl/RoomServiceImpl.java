@@ -36,6 +36,7 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public void deleteRoom(Integer roomID) {
+
         roomRepos.deleteById(roomID);
     }
 
@@ -50,5 +51,10 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public List<RoomDto> getAllRooms() {
         return roomRepos.findAll().stream().map(RoomDto::from).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<RoomDto> getOwnedRoom(Integer userId) {
+        return roomRepos.findRoomsByOwner(userId).stream().map(RoomDto::from).collect(Collectors.toList());
     }
 }

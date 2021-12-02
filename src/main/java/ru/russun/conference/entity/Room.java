@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "room")
+@Table(name = "rooms")
 @Builder
 @Data
 @NoArgsConstructor
@@ -21,7 +21,7 @@ public class Room {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id_fk")
     private User owner;
 }

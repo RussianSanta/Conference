@@ -1,0 +1,35 @@
+###
+
+GET http://localhost:8080/rooms
+
+###
+
+GET http://localhost:8080/rooms/6
+###
+
+POST http://localhost:8080/rooms/new
+Content-Type: application/json
+
+{
+  "name": "room2",
+  "owner": {
+    "id": 4
+  }
+}
+
+###
+
+PUT http://localhost:8080/rooms/6
+Content-Type: application/json
+
+{
+  "name": "awesome room"
+}
+###
+
+DELETE http://localhost:8080/rooms/7
+
+###
+
+GET http://localhost:8080/rooms/owner=4
+

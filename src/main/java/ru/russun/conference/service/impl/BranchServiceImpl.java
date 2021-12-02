@@ -24,10 +24,10 @@ public class BranchServiceImpl implements BranchService {
     }
 
     @Override
-    public BranchDto addBranch(BranchDto branch, Integer roomId) {
+    public BranchDto addBranch(BranchDto branch) {
         Branch branchToAdd = Branch.builder()
             .name(branch.getName())
-            .room(roomRepos.findById(roomId).orElseThrow(IllegalArgumentException::new))
+            .room(roomRepos.findById(branch.getRoom().getId()).orElseThrow(IllegalArgumentException::new))
             .build();
 
         branchRepos.save(branchToAdd);
@@ -54,5 +54,10 @@ public class BranchServiceImpl implements BranchService {
     @Override
     public List<BranchDto> getAllBranches() {
         return branchRepos.findAll().stream().map(BranchDto::from).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<BranchDto> getAllBranchesInRoom(Integer roomId) {
+        return branchRepos.findAllBranchesByRoomId(roomId).stream().map(BranchDto::from).collect(Collectors.toList());
     }
 }

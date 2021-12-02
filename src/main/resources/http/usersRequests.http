@@ -1,0 +1,40 @@
+###
+
+GET http://localhost:8080/users
+
+###
+
+GET http://localhost:8080/users/1
+###
+
+POST http://localhost:8080/registration
+Content-Type: application/json
+
+{
+  "username": "newUser1",
+  "password": "123",
+  "mail": "mail.mail"
+}
+
+###
+
+PUT http://localhost:8080/users/3
+Content-Type: application/json
+
+{
+  "username": "newUser2",
+  "password": "123",
+  "mail": "mail.mail"
+}
+###
+
+PUT http://localhost:8080/users/5/ban
+
+###
+
+DELETE http://localhost:8080/users/3
+
+###
+
+GET http://localhost:8080/users/banned=false
+

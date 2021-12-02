@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @Builder
 @Data
 @NoArgsConstructor
@@ -42,10 +42,10 @@ public class User {
     @Column(name = "mail")
     private String mail;
 
-    @Column(name = "isBanned")
+    @Column(name = "is_banned")
     private boolean isBanned;
 
     @Column(name = "role")
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private Role role;
 }

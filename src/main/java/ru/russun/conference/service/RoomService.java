@@ -14,4 +14,6 @@ public interface RoomService {
     RoomDto updateRoom(RoomDto room, Integer roomId);
 
     List<RoomDto> getAllRooms();
+
+    List<RoomDto> getOwnedRoom(Integer userId);
 }

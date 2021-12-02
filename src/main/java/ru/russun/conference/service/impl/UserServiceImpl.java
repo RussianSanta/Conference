@@ -2,6 +2,7 @@ package ru.russun.conference.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.russun.conference.dto.RoomDto;
 import ru.russun.conference.dto.UserDto;
 import ru.russun.conference.entity.User;
 import ru.russun.conference.repos.UserRepos;
@@ -17,7 +18,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUser(Integer userId) {
-        return UserDto.from(userRepos.findUserByBannedIsFalseAndId(userId).orElseThrow(IllegalArgumentException::new));
+        return UserDto.from(userRepos.findById(userId).orElseThrow(IllegalArgumentException::new));
     }
 
     @Override
@@ -42,12 +43,13 @@ public class UserServiceImpl implements UserService {
     public UserDto banUser(Integer userId) {
         User userToBan = userRepos.findById(userId).orElseThrow(IllegalArgumentException::new);
         userToBan.setBanned(true);
-        return null;
+        userRepos.save(userToBan);
+        return UserDto.from(userToBan);
     }
 
     @Override
     public UserDto updateUser(UserDto user, Integer userId) {
-        User userToUpdate = userRepos.findUserByBannedIsFalseAndId(userId).orElseThrow(IllegalArgumentException::new);
+        User userToUpdate = userRepos.findById(userId).orElseThrow(IllegalArgumentException::new);
         userToUpdate.setUsername(user.getUsername());
         userToUpdate.setMail(user.getMail());
         userToUpdate.setPassword(user.getPassword());
@@ -58,5 +60,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDto> getAllUsers() {
         return userRepos.findAll().stream().map(UserDto::from).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UserDto> getBannedUsers(boolean isBanned) {
+        return userRepos.findAllUsersByIsBanned(isBanned).stream().map(UserDto::from).collect(Collectors.toList());
     }
 }

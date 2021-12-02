@@ -17,15 +17,15 @@ import java.io.Serializable;
 @IdClass(CallUser.CallUserPk.class)
 public class CallUser {
     public static class CallUserPk implements Serializable {
-        protected Integer callId;
-        protected Integer userId;
+        protected Call call;
+        protected User user;
 
         public CallUserPk() {
         }
 
-        public CallUserPk(Integer callId, Integer userId) {
-            this.callId = callId;
-            this.userId = userId;
+        public CallUserPk(Call call, User user) {
+            this.call = call;
+            this.user = user;
         }
     }
 

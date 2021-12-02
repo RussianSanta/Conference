@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "branch")
+@Table(name = "branches")
 @Builder
 @Data
 @NoArgsConstructor

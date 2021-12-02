@@ -17,15 +17,15 @@ import java.io.Serializable;
 @IdClass(RoomUser.RoomUserPk.class)
 public class RoomUser {
     public static class RoomUserPk implements Serializable {
-        protected Integer roomId;
-        protected Integer userId;
+        protected Room room;
+        protected User user;
 
         public RoomUserPk() {
         }
 
-        public RoomUserPk(Integer callId, Integer userId) {
-            this.roomId = callId;
-            this.userId = userId;
+        public RoomUserPk(Room call, User user) {
+            this.room = call;
+            this.user = user;
         }
     }
 
@@ -37,5 +37,5 @@ public class RoomUser {
     @Id
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id_fk")
-    private User owner;
+    private User user;
 }

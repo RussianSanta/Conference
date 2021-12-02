@@ -1,5 +1,6 @@
 package ru.russun.conference.service;
 
+import ru.russun.conference.dto.RoomDto;
 import ru.russun.conference.dto.UserDto;
 
 import java.util.List;
@@ -16,4 +17,7 @@ public interface UserService {
     UserDto updateUser(UserDto user, Integer userId);
 
     List<UserDto> getAllUsers();
+
+    List<UserDto> getBannedUsers(boolean isBanned);
+
 }

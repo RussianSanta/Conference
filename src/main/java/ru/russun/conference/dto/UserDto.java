@@ -12,13 +12,16 @@ public class UserDto {
     private String password;
     private String mail;
     private String role;
+    private boolean isBanned;
 
     public static UserDto from(User user){
         return UserDto.builder()
+                .id(user.getId())
                 .username(user.getUsername())
                 .password(user.getPassword())
                 .mail(user.getMail())
                 .role(user.getRole().getRoleName())
+                .isBanned(user.isBanned())
                 .build();
     }
 }

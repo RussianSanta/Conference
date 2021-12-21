@@ -1,0 +1,47 @@
+###
+
+GET http://localhost:8080/messages
+
+###
+
+GET http://localhost:8080/messages/12
+###
+
+POST http://localhost:8080/messages/new
+Content-Type: application/json
+
+{
+  "text": "Новое сообщение 7",
+  "owner":{
+    "id": 4
+  },
+  "branch": {
+    "id": 9
+  }
+}
+
+###
+
+PUT http://localhost:8080/messages/1
+Content-Type: application/json
+
+{
+  "text": "Измененное сообщение 1",
+  "owner":{
+    "id": 4
+  },
+  "branch": {
+    "id": 9
+  }
+}
+###
+
+DELETE http://localhost:8080/messages/12
+
+###
+
+GET http://localhost:8080/rooms/6/messages
+
+###
+
+GET http://localhost:8080/branches/9/messages

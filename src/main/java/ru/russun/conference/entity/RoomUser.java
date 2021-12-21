@@ -16,16 +16,17 @@ import java.io.Serializable;
 @AllArgsConstructor
 @IdClass(RoomUser.RoomUserPk.class)
 public class RoomUser {
+    @Embeddable
     public static class RoomUserPk implements Serializable {
-        protected Room room;
-        protected User user;
+        protected Integer room;
+        protected Integer user;
 
         public RoomUserPk() {
         }
 
         public RoomUserPk(Room call, User user) {
-            this.room = call;
-            this.user = user;
+            this.room = call.getId();
+            this.user = user.getId();
         }
     }
 

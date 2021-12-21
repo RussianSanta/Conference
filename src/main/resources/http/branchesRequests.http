@@ -4,7 +4,7 @@ GET http://localhost:8080/branches
 
 ###
 
-GET http://localhost:8080/branches/9
+GET http://localhost:8080/branches/9?expand=true
 ###
 
 POST http://localhost:8080/branches/new
@@ -23,7 +23,7 @@ PUT http://localhost:8080/branches/9
 Content-Type: application/json
 
 {
-  "name": "renamed branch"
+  "name": "renamed branch 1"
 }
 ###
 

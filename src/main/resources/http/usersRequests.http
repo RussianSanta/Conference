@@ -18,12 +18,12 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:8080/users/3
+PUT http://localhost:8080/users/15
 Content-Type: application/json
 
 {
-  "username": "newUser2",
-  "password": "123",
+  "username": "newUser222",
+  "password": "12345",
   "mail": "mail.mail"
 }
 ###
@@ -36,5 +36,5 @@ DELETE http://localhost:8080/users/3
 
 ###
 
-GET http://localhost:8080/users/banned=false
+GET http://localhost:8080/users/banned=true
 

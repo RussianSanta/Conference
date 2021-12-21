@@ -1,6 +1,7 @@
 package ru.russun.conference.service;
 
 import ru.russun.conference.dto.BranchDto;
+import ru.russun.conference.dto.MessageDto;
 
 import java.util.List;
 

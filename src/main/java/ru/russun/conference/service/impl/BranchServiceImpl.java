@@ -3,6 +3,7 @@ package ru.russun.conference.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.russun.conference.dto.BranchDto;
+import ru.russun.conference.dto.MessageDto;
 import ru.russun.conference.entity.Branch;
 import ru.russun.conference.repos.BranchRepos;
 import ru.russun.conference.repos.RoomRepos;

@@ -8,6 +8,8 @@ import ru.russun.conference.repos.CallRepos;
 import ru.russun.conference.repos.RoomRepos;
 import ru.russun.conference.service.CallService;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,12 +26,12 @@ public class CallServiceImpl implements CallService {
     }
 
     @Override
-    public CallDto addCall(CallDto callDto, Integer roomId) {
+    public CallDto addCall(CallDto callDto) {
         Call call = Call.builder()
                 .status(callDto.getStatus())
                 .duration(callDto.getDuration())
-                .room(roomRepos.findById(roomId).orElseThrow(IllegalArgumentException::new))
-                .startDate(callDto.getStartDate())
+                .room(roomRepos.findById(callDto.getRoom().getId()).orElseThrow(IllegalArgumentException::new))
+                .startDate(Timestamp.valueOf(LocalDateTime.now()))
                 .build();
         callRepos.save(call);
         return CallDto.from(call);
@@ -52,5 +54,10 @@ public class CallServiceImpl implements CallService {
     @Override
     public List<CallDto> getAllCalls() {
         return callRepos.findAll().stream().map(CallDto::from).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CallDto> getAllCallsByRoom(Integer roomId) {
+        return callRepos.findAllByRoom(roomId).stream().map(CallDto::from).collect(Collectors.toList());
     }
 }

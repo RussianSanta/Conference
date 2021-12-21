@@ -10,6 +10,8 @@ import ru.russun.conference.repos.MessageRepos;
 import ru.russun.conference.repos.UserRepos;
 import ru.russun.conference.service.MessageService;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,10 +30,10 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public MessageDto addMessage(MessageDto messageDto, Integer branchId) {
+    public MessageDto addMessage(MessageDto messageDto) {
         Message message = Message.builder()
-                .branch(branchRepos.findById(branchId).orElseThrow(IllegalArgumentException::new))
-                .date(messageDto.getDate())
+                .branch(branchRepos.findById(messageDto.getBranch().getId()).orElseThrow(IllegalArgumentException::new))
+                .date(Timestamp.valueOf(LocalDateTime.now()))
                 .owner(userRepos.findById(messageDto.getOwner().getId()).orElseThrow(IllegalArgumentException::new))
                 .text(messageDto.getText())
                 .build();
@@ -55,5 +57,15 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public List<MessageDto> getAllMessages() {
         return messageRepos.findAll().stream().map(MessageDto::from).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<MessageDto> getAllMessagesByBranch(Integer branchId) {
+        return messageRepos.findAllByBranch(branchId).stream().map(MessageDto::from).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<MessageDto> getAllMessagesByRoom(Integer roomId) {
+        return messageRepos.findAllByRoom(roomId).stream().map(MessageDto::from).collect(Collectors.toList());
     }
 }

@@ -1,6 +1,8 @@
 package ru.russun.conference.service;
 
 import ru.russun.conference.dto.RoomDto;
+import ru.russun.conference.dto.UserDto;
+import ru.russun.conference.entity.RoomUser;
 
 import java.util.List;
 
@@ -16,4 +18,6 @@ public interface RoomService {
     List<RoomDto> getAllRooms();
 
     List<RoomDto> getOwnedRoom(Integer userId);
+
+    List<UserDto> addUserToRoom(Integer userId, Integer roomId);
 }

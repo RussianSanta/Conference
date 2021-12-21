@@ -16,16 +16,17 @@ import java.io.Serializable;
 @AllArgsConstructor
 @IdClass(CallUser.CallUserPk.class)
 public class CallUser {
+    @Embeddable
     public static class CallUserPk implements Serializable {
-        protected Call call;
-        protected User user;
+        protected Integer call;
+        protected Integer user;
 
         public CallUserPk() {
         }
 
         public CallUserPk(Call call, User user) {
-            this.call = call;
-            this.user = user;
+            this.call = call.getId();
+            this.user = user.getId();
         }
     }
 

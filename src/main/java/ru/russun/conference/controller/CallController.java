@@ -10,6 +10,7 @@ import ru.russun.conference.service.CallService;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 public class CallController {
     @Autowired
     CallService callService;

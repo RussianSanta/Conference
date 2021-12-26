@@ -53,6 +53,7 @@ public class UserServiceImpl implements UserService {
         userToUpdate.setUsername(user.getUsername());
         userToUpdate.setMail(user.getMail());
         userToUpdate.setPassword(user.getPassword());
+        userToUpdate.setBanned(user.isBanned());
         userRepos.save(userToUpdate);
         return UserDto.from(userToUpdate);
     }

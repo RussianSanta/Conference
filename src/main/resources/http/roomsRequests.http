@@ -11,7 +11,7 @@ POST http://localhost:8080/rooms
 Content-Type: application/json
 
 {
-  "name": "room3",
+  "name": "room31",
   "owner": {
     "id": 5
   }
@@ -31,7 +31,7 @@ Content-Type: application/json
 }
 ###
 
-DELETE http://localhost:8080/rooms/7
+DELETE http://localhost:8080/rooms/6
 
 ###
 

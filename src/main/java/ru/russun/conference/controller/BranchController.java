@@ -10,6 +10,7 @@ import ru.russun.conference.service.BranchService;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 public class BranchController {
     @Autowired
     BranchService branchService;
@@ -45,7 +46,7 @@ public class BranchController {
         return branches;
     }
 
-    @PostMapping("/branches/new")
+    @PostMapping("/branches")
     public BranchDto createNewBranch(@RequestBody BranchDto branchDto,
                                      @RequestParam(value = "expand", defaultValue = "false") boolean expand) {
         BranchDto branch = branchService.addBranch(branchDto);

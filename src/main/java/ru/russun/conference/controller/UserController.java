@@ -9,6 +9,7 @@ import ru.russun.conference.service.UserService;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 public class UserController {
     @Autowired
     UserService userService;

@@ -12,6 +12,7 @@ import ru.russun.conference.repos.RoomUserRepos;
 import ru.russun.conference.repos.UserRepos;
 import ru.russun.conference.service.RoomService;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,14 +45,16 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public void deleteRoom(Integer roomID) {
-
         roomRepos.deleteById(roomID);
     }
 
     @Override
     public RoomDto updateRoom(RoomDto room, Integer roomId) {
         Room roomForUpdate = roomRepos.findById(roomId).orElseThrow(IllegalArgumentException::new);
+        User owner = userRepos.findById(room.getOwner().getId()).orElseThrow(IllegalArgumentException::new);
         roomForUpdate.setName(room.getName());
+        roomForUpdate.setOwner(owner);
+        roomUserRepos.save(new RoomUser(roomForUpdate,owner));
         roomRepos.save(roomForUpdate);
         return RoomDto.from(roomForUpdate);
     }

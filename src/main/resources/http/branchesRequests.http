@@ -7,7 +7,7 @@ GET http://localhost:8080/branches
 GET http://localhost:8080/branches/9?expand=true
 ###
 
-POST http://localhost:8080/branches/new
+POST http://localhost:8080/branches
 Content-Type: application/json
 
 {

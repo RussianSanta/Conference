@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface RoomUserRepos extends CrudRepository<RoomUser, RoomUser.RoomUserPk> {
     List<RoomUser> findAllByRoomId(Integer roomId);
+    void deleteAllByRoomId(Integer roomId);
 }

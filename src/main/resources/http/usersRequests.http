@@ -11,9 +11,9 @@ POST http://localhost:8080/registration
 Content-Type: application/json
 
 {
-  "username": "newUser1",
+  "username": "newUser123",
   "password": "123",
-  "mail": "mail.mail"
+  "mail": "mail.mail",
 }
 
 ###
@@ -28,7 +28,7 @@ Content-Type: application/json
 }
 ###
 
-PUT http://localhost:8080/users/5/ban
+PUT http://localhost:8080/users/4/ban
 
 ###
 

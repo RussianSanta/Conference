@@ -8,6 +8,7 @@ import ru.russun.conference.service.MessageService;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 public class MessageController {
     @Autowired
     MessageService messageService;

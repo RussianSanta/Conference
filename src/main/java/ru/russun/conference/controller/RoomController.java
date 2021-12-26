@@ -9,6 +9,7 @@ import ru.russun.conference.service.RoomService;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 public class RoomController {
     @Autowired
     RoomService roomService;

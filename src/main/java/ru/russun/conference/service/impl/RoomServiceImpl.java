@@ -3,16 +3,13 @@ package ru.russun.conference.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.russun.conference.dto.RoomDto;
-import ru.russun.conference.dto.UserDto;
+import ru.russun.conference.dto.MemberDto;
+import ru.russun.conference.entity.Member;
 import ru.russun.conference.entity.Room;
-import ru.russun.conference.entity.RoomUser;
-import ru.russun.conference.entity.User;
 import ru.russun.conference.repos.RoomRepos;
-import ru.russun.conference.repos.RoomUserRepos;
-import ru.russun.conference.repos.UserRepos;
+import ru.russun.conference.repos.MemberRepos;
 import ru.russun.conference.service.RoomService;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,42 +18,26 @@ public class RoomServiceImpl implements RoomService {
     @Autowired
     RoomRepos roomRepos;
     @Autowired
-    UserRepos userRepos;
-    @Autowired
-    RoomUserRepos roomUserRepos;
+    MemberRepos memberRepos;
 
     @Override
-    public RoomDto getRoom(Integer roomId) {
+    public RoomDto getRoom(String roomId) {
         return RoomDto.from(roomRepos.findById(roomId).orElseThrow(IllegalArgumentException::new));
     }
 
     @Override
     public RoomDto addRoom(RoomDto roomDto) {
-        User owner = userRepos.findById(roomDto.getOwner().getId()).orElseThrow(IllegalArgumentException::new);
         Room room = Room.builder()
-                .owner(owner)
-                .name(roomDto.getName())
+                .id(roomDto.getId())
+                .code(roomDto.getCode())
                 .build();
         roomRepos.save(room);
-        RoomUser roomUser = new RoomUser(room, owner);
-        roomUserRepos.save(roomUser);
         return RoomDto.from(room);
     }
 
     @Override
-    public void deleteRoom(Integer roomID) {
+    public void deleteRoom(String roomID) {
         roomRepos.deleteById(roomID);
-    }
-
-    @Override
-    public RoomDto updateRoom(RoomDto room, Integer roomId) {
-        Room roomForUpdate = roomRepos.findById(roomId).orElseThrow(IllegalArgumentException::new);
-        User owner = userRepos.findById(room.getOwner().getId()).orElseThrow(IllegalArgumentException::new);
-        roomForUpdate.setName(room.getName());
-        roomForUpdate.setOwner(owner);
-        roomUserRepos.save(new RoomUser(roomForUpdate,owner));
-        roomRepos.save(roomForUpdate);
-        return RoomDto.from(roomForUpdate);
     }
 
     @Override
@@ -65,16 +46,27 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public List<RoomDto> getOwnedRoom(Integer userId) {
-        return roomRepos.findRoomsByOwner(userId).stream().map(RoomDto::from).collect(Collectors.toList());
+    public void addUserToRoom(MemberDto memberDto) {
+        Room roomFromDto = roomRepos.findById(memberDto.getRoomId()).orElseThrow(IllegalArgumentException::new);
+        Member member = Member.builder()
+                .room(roomFromDto)
+                .name(memberDto.getName())
+                .build();
     }
 
     @Override
-    public List<UserDto> addUserToRoom(Integer userId, Integer roomId) {
-        User user = userRepos.findById(userId).orElseThrow(IllegalArgumentException::new);
-        Room room = roomRepos.findById(roomId).orElseThrow(IllegalArgumentException::new);
-        RoomUser roomUser = new RoomUser(room, user);
-        roomUserRepos.save(roomUser);
-        return roomUserRepos.findAllByRoomId(roomId).stream().map(RoomUser::getUser).map(UserDto::from).collect(Collectors.toList());
+    public List<MemberDto> getMembers(RoomDto roomDto) {
+        Room roomFromDto = roomRepos.findById(roomDto.getId()).orElseThrow(IllegalArgumentException::new);
+        return memberRepos.findAllByRoom(roomFromDto).stream().map(MemberDto::from).collect(Collectors.toList());
+    }
+
+    @Override
+    public void checkMembers(RoomDto roomDto) {
+        if (getMembers(roomDto) != null) {
+            int count = getMembers(roomDto).size();
+            if (count == 0) {
+                deleteRoom(roomDto.getId());
+            }
+        }
     }
 }

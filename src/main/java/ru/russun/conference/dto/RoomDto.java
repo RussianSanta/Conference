@@ -9,15 +9,13 @@ import ru.russun.conference.entity.Room;
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RoomDto {
-    private Integer id;
-    private String name;
-    private UserDto owner;
+    private String id;
+    private String code;
 
     public static RoomDto from(Room room){
         return RoomDto.builder()
                 .id(room.getId())
-                .name(room.getName())
-                .owner(UserDto.from(room.getOwner()))
+                .code(room.getCode())
                 .build();
     }
 }

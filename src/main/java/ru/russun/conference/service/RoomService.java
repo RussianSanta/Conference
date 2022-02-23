@@ -1,23 +1,22 @@
 package ru.russun.conference.service;
 
 import ru.russun.conference.dto.RoomDto;
-import ru.russun.conference.dto.UserDto;
-import ru.russun.conference.entity.RoomUser;
+import ru.russun.conference.dto.MemberDto;
 
 import java.util.List;
 
 public interface RoomService {
-    RoomDto getRoom(Integer roomId);
+    RoomDto getRoom(String roomId);
 
     RoomDto addRoom(RoomDto room);
 
-    void deleteRoom(Integer roomID);
-
-    RoomDto updateRoom(RoomDto room, Integer roomId);
+    void deleteRoom(String roomID);
 
     List<RoomDto> getAllRooms();
 
-    List<RoomDto> getOwnedRoom(Integer userId);
+    void addUserToRoom(MemberDto member);
 
-    List<UserDto> addUserToRoom(Integer userId, Integer roomId);
+    List<MemberDto> getMembers(RoomDto room);
+
+    void checkMembers(RoomDto room);
 }

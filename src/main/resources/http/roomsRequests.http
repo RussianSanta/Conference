@@ -1,39 +1,24 @@
 ###
 
-GET http://localhost:8080/rooms
+GET http://localhost:8080/room/admin_room/members
 
 ###
 
-GET http://localhost:8080/rooms/6
-###
-
-POST http://localhost:8080/rooms
+POST http://localhost:8080/room/best_room/connect
 Content-Type: application/json
 
 {
-  "name": "room31",
-  "owner": {
-    "id": 5
-  }
+  "name": "Игорь",
+  "roomId": "best_room"
 }
 
 ###
 
-POST http://localhost:8080/rooms/6/15
-
-###
-
-PUT http://localhost:8080/rooms/6
+DELETE http://localhost:8080/room/best_room/leave
 Content-Type: application/json
 
 {
-  "name": "awesome room"
+  "id": "5"
 }
-###
-
-DELETE http://localhost:8080/rooms/6
 
 ###
-
-GET http://localhost:8080/rooms/owner=4
-

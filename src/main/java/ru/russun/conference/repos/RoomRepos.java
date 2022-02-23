@@ -7,8 +7,6 @@ import ru.russun.conference.entity.Room;
 
 import java.util.List;
 
-public interface RoomRepos extends CrudRepository<Room, Integer> {
+public interface RoomRepos extends CrudRepository<Room, String> {
     List<Room> findAll();
-    @Query("select r from Room r where r.owner.id = :userId")
-    List<Room> findRoomsByOwner(@Param("userId") Integer userId);
 }

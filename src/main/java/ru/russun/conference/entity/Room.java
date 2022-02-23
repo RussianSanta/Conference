@@ -8,20 +8,14 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "rooms")
+@Table(name = "room")
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Room {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private Integer id;
+    private String id;
 
-    @Column(name = "name")
-    private String name;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_id_fk")
-    private User owner;
+    private String code;
 }

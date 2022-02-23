@@ -1,0 +1,25 @@
+###
+
+GET http://localhost:8080/home/all
+
+###
+
+POST http://localhost:8080/home/new
+Content-Type: application/json
+
+{
+  "id": "best_room",
+  "code": ""
+}
+
+###
+
+POST http://localhost:8080/home/connect
+Content-Type: application/json
+
+{
+  "id": "best_room",
+  "code": ""
+}
+
+###

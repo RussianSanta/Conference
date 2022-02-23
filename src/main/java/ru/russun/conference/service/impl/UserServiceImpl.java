@@ -2,69 +2,54 @@ package ru.russun.conference.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.russun.conference.dto.RoomDto;
-import ru.russun.conference.dto.UserDto;
-import ru.russun.conference.entity.User;
-import ru.russun.conference.repos.UserRepos;
-import ru.russun.conference.service.UserService;
+import ru.russun.conference.dto.MemberDto;
+import ru.russun.conference.entity.Member;
+import ru.russun.conference.entity.Room;
+import ru.russun.conference.repos.MemberRepos;
+import ru.russun.conference.repos.RoomRepos;
+import ru.russun.conference.service.MemberService;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements MemberService {
     @Autowired
-    UserRepos userRepos;
+    RoomRepos roomRepos;
+    @Autowired
+    MemberRepos memberRepos;
 
     @Override
-    public UserDto getUser(Integer userId) {
-        return UserDto.from(userRepos.findById(userId).orElseThrow(IllegalArgumentException::new));
+    public MemberDto getMember(Integer memberId) {
+        return MemberDto.from(memberRepos.findById(memberId).orElseThrow(IllegalArgumentException::new));
     }
 
     @Override
-    public UserDto addUser(UserDto userDto) {
-        User user = User.builder()
-                .username(userDto.getUsername())
-                .mail(userDto.getMail())
-                .password(userDto.getPassword())
-                .isBanned(false)
-                .role(User.Role.USER)
+    public MemberDto addMember(MemberDto memberDto) {
+        Room roomFromDto = roomRepos.findById(memberDto.getRoomId()).orElseThrow(IllegalArgumentException::new);
+        Member member = Member.builder()
+                .room(roomFromDto)
+                .name(memberDto.getName())
                 .build();
-        userRepos.save(user);
-        return UserDto.from(user);
+        memberRepos.save(member);
+        return MemberDto.from(member);
     }
 
     @Override
-    public void deleteUser(Integer userId) {
-        userRepos.deleteById(userId);
+    public void deleteMember(MemberDto memberDto) {
+        memberRepos.deleteById(memberDto.getId());
     }
 
     @Override
-    public UserDto banUser(Integer userId) {
-        User userToBan = userRepos.findById(userId).orElseThrow(IllegalArgumentException::new);
-        userToBan.setBanned(true);
-        userRepos.save(userToBan);
-        return UserDto.from(userToBan);
+    public MemberDto updateMember(MemberDto memberDto, Integer memberId) {
+        Member memberToUpdate = memberRepos.findById(memberId).orElseThrow(IllegalArgumentException::new);
+        memberToUpdate.setName(memberDto.getName());
+        memberRepos.save(memberToUpdate);
+        return MemberDto.from(memberToUpdate);
     }
 
     @Override
-    public UserDto updateUser(UserDto user, Integer userId) {
-        User userToUpdate = userRepos.findById(userId).orElseThrow(IllegalArgumentException::new);
-        userToUpdate.setUsername(user.getUsername());
-        userToUpdate.setMail(user.getMail());
-        userToUpdate.setPassword(user.getPassword());
-        userToUpdate.setBanned(user.isBanned());
-        userRepos.save(userToUpdate);
-        return UserDto.from(userToUpdate);
-    }
-
-    @Override
-    public List<UserDto> getAllUsers() {
-        return userRepos.findAll().stream().map(UserDto::from).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<UserDto> getBannedUsers(boolean isBanned) {
-        return userRepos.findAllUsersByIsBanned(isBanned).stream().map(UserDto::from).collect(Collectors.toList());
+    public List<MemberDto> getAllMembers() {
+        return memberRepos.findAll().stream().map(MemberDto::from).collect(Collectors.toList());
     }
 }

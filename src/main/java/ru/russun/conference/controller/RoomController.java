@@ -27,9 +27,8 @@ public class RoomController {
     }
 
     @PostMapping("/room/{roomId}/connect")
-    public RoomDto connectToRoom(@PathVariable("roomId") String roomId, @RequestBody MemberDto memberDto) {
-        memberService.addMember(memberDto);
-        return roomService.getRoom(roomId);
+    public MemberDto connectToRoom(@PathVariable("roomId") String roomId, @RequestBody MemberDto memberDto) {
+        return memberService.addMember(memberDto);
     }
 
     @DeleteMapping("/room/{roomId}/leave")
